@@ -230,7 +230,7 @@ jobs:
                 ]
               }
 
-  terraform-destroy:
+  terraform destroy:
     executor: terraform-executor
     steps:
       - checkout
