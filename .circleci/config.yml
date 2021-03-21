@@ -64,12 +64,13 @@ jobs:
       - *save-cache
       - run:
           name: Copy Infastructure dir
-          command: cp -r infastructure artifacts/infastructure
+          command: |
+            cp -r infastructure artifacts/infastructure
       - persist_to_workspace:
-        root: ./
-        paths:
-          - artifacts
-          
+          root: ./
+          paths:
+            - artifacts
+
   linting:
     executor: app-executor
     steps:
