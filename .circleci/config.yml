@@ -160,6 +160,8 @@ jobs:
     executor: app-executor
     steps:
       - checkout
+      - attach_workspace:    # attached workspace to get access to persisted artifacts dir
+          at: ./
       - *show-current-branch-name
       - *install-aws-cli
       - *build-project
