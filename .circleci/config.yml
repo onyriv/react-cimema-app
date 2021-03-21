@@ -103,14 +103,14 @@ jobs:
       - run:
           name: Terraform Plan
           command: |
-            cd artifacts/infrastructure/
+            cd artifacts/infastructure/
             terraform init
             terraform workspace select ${CIRCLE_BRANCH} || terraform workspace new ${CIRCLE_BRANCH}
             terraform plan
       - run:
           name: Terraform Apply
           command: |
-            cd artifacts/infrastructure/
+            cd artifacts/infastructure/
             terraform workspace select ${CIRCLE_BRANCH}
             terraform apply --auto-approve
             terraform output cinema_app_bucket_name > ../cinema_bucket_name.txt
@@ -247,7 +247,7 @@ jobs:
       - run:
           name: Terraform Destroy
           command: |
-            cd infrastructure/
+            cd infastructure/
             terraform init
             terraform workspace select ${CIRCLE_BRANCH} || terraform workspace new ${CIRCLE_BRANCH}
             terraform destroy --auto-approve
