@@ -72,44 +72,44 @@ jobs:
           name: Run linting
           command: npm run lint
   terraform-validate:
-  executor: terraform-executor
-  steps:
-    - checkout
-    - *show-current-branch-name
-    - run:
-        name: Terraform Validate & Format
-        command: |
-          cd infrastructure/
-          terraform init -backend=false   
-          terraform validate
-          terraform fmt -check
+    executor: terraform-executor
+    steps:
+      - checkout
+      - *show-current-branch-name
+      - run:
+          name: Terraform Validate & Format
+          command: |
+            cd infrastructure/
+            terraform init -backend=false   
+            terraform validate
+            terraform fmt -check
    
   terraform-plan-and-apply:
-  executor: terraform-executor
-  steps:
-    - checkout
-    - attach_workspace:    # attaches workflow workspace to the current container
-        at: ./
-    - *show-current-branch-name
-    - run:
-        name: Terraform Plan
-        command: |
-          cd artifacts/infrastructure/
-          terraform init
-          terraform workspace select ${CIRCLE_BRANCH} || terraform workspace new ${CIRCLE_BRANCH}
-          terraform plan
-    - run:
-        name: Terraform Apply
-        command: |
-          cd artifacts/infrastructure/
-          terraform workspace select ${CIRCLE_BRANCH}
-          terraform apply --auto-approve
-          terraform output cinema_app_bucket_name > ../cinema_bucket_name.txt
-          terraform output cloudfront_distribution_id > ../cloudfront_distribution_id.txt
-    - persist_to_workspace:
-        root: ./
-        paths:
-          - artifacts 
+    executor: terraform-executor
+    steps:
+      - checkout
+      - attach_workspace:    # attaches workflow workspace to the current container
+          at: ./
+      - *show-current-branch-name
+      - run:
+          name: Terraform Plan
+          command: |
+            cd artifacts/infrastructure/
+            terraform init
+            terraform workspace select ${CIRCLE_BRANCH} || terraform workspace new ${CIRCLE_BRANCH}
+            terraform plan
+      - run:
+          name: Terraform Apply
+          command: |
+            cd artifacts/infrastructure/
+            terraform workspace select ${CIRCLE_BRANCH}
+            terraform apply --auto-approve
+            terraform output cinema_app_bucket_name > ../cinema_bucket_name.txt
+            terraform output cloudfront_distribution_id > ../cloudfront_distribution_id.txt
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - artifacts 
           
   prettier:
     executor: app-executor
