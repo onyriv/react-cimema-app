@@ -325,7 +325,7 @@ workflows:
       - hold:
           type: approval
           requires:
-          - notify-via-slack
+          - deploy-to-aws-cloudfront
       - terraform destroy:
           requires:
             - hold
