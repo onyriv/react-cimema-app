@@ -316,7 +316,7 @@ workflows:
           requires:
           - notify-via-slack
       - terraform destroy:
-           requires:
+          requires:
             - hold
           filters:
             branches:
