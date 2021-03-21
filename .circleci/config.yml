@@ -137,7 +137,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:    # attached workspace to get access to persisted artifacts dir
-        at: ./
+          at: ./
       - *show-current-branch-name
       - *install-aws-cli
       - *build-project
